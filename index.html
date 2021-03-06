@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Richet_Désiré</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/style1.css" />
+	</head>
+	<body class="formulaire">
+	<?php
+// define variables and set to empty values
+$nameErr = $lastnameErr = $genderErr = "";
+$name  = $lastname = $gender =
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["nom"])) {
+    $nameErr = "name is required";
+  } else {
+    $name = test_input($_POST["nom"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+      $nameErr = "Only letters and white space allowed";
+    }
+  }
+  if (empty($_POST["prénom"])) {
+    $lastnameErr = "lastname is required";
+  } else {
+    $lastname = test_input($_POST["prénom"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z-' ]*$/",$lastname)) {
+      $lastnameErr = "Only letters and white space allowed";
+    }
+  }
+   if (empty($_POST["sexe"])) {
+    $genderErr = "Gender is required";
+  } else {
+    $gender = test_input($_POST["sexe"]);
+  }
+}
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
+		<img src="img/logo1.PNG" alt="image">
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+			<label> Nom: </label>
+			<input type="text" name="nom" value="Exemple: Dupond">
+			<span class="error">* <?php echo $nameErr;?></span> <br><br>
+			
+			<label> Prénom: </label>
+			<input type="text" name="Prénom" value="Exemple: Jean">
+			<span class="error">* <?php echo $nameErr;?></span> <br><br>
+			
+			<label for="sexe">sexe:</label>
+			<select id="sexe" name="sexe">
+			  <option value="Homme">Homme</option>
+			  <option value="Femme">Femme</option>
+			  <option value="Autre">Autre</option>
+			  <span class="error">* <?php echo $genderErr;?></span>
+			</select>
+			<input type="submit" value="Valider !">	
+		</form>
+		<br>
+	</body>
+</html>
